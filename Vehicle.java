@@ -65,16 +65,20 @@ public class Vehicle
 	
 	public void drive()
 	{
-	
+		fuel -= engine.fuelRequired(this.distanceToNextStop(), this.totalWeight(), this.getSpeed());
+		milesToDestination -= this.distanceToNextStop();
+		forwardProgress += this.distanceToNextStop();
 	}
 	
 	public void drive(double minDistance)
 	{
-	
+		fuel -= engine.fuelRequired(minDistance, this.totalWeight(), this.getSpeed());
+		milesToDestination -= minDistance;
+		forwardProgress += minDistance;
 	}
 	
 	public double totalWeight()
 	{
-	
+		return baseWeight + (passengers * 150) + cargo;
 	}
 }

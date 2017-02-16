@@ -5,16 +5,19 @@ public class Vehicle
 	private static double cargoCapacity = 500;
 	private static int wheels = 4;
 	private static double baseWeight = 4000.0;
+	private static double speed = 0; //starts at 0 unless otherwise changed? 
 	
 	private int milesToDestination = 2893;
 	private double money;
 	private double fuel;
 	private int passengers;
+	private int passengersWeight;
 	private double cargo;
 	private int tires;
 	private double odometer;
 	private double forwardProgress;
 	private Engine engine;
+	
 	
 	/**
 	* Represents the mile markers for all the gas stops along the way
@@ -42,6 +45,7 @@ public class Vehicle
 		this.money = 2000;
 		this.fuel = 16.0;
 		this.passengers = 4;
+		this.passengersWeight = 520;
 		this.cargo = 250.0;
 		this.tires = 5;
 		this.odometer = 0.0;
@@ -53,28 +57,47 @@ public class Vehicle
 		return ((forwardProgress/200) - (int)(forwardProgress/200)) * 200;
 	}
 	
+
 	public getSpeed()
 	{
-		
+		return speed; 
 	}
 	
-	public setSpeed()
+	public setSpeed(double speed)
 	{
-	
+		this.speed = speed;
 	}
 	
 	public void drive()
 	{
-	
+		double fuelNeeded = engine.fuelRequired(this.distanceToNextStop, weight, speed);
+		this.fuel -= fuelNeeded; 
+		milestoDestination - this.distanceToNextStop; 
+		forwardProgress += this.distanceToNextStop; 
 	}
 	
 	public void drive(double minDistance)
-	{
-	
+	{	
+		double fuelNeeded = engine.fuelRequired(minDistance, weight, speed);
+		this.fuel -= fuelNeeded; 
+		milestoDestination - minDistance; 
+		forwardProgress += minDistance; }
+
+	public boolean isStranded() {
+		return (this.wheels < 4 || this.fuel <= 0 || this.money == 0);
 	}
-	
-	public double totalWeight()
-	{
-	
+
+	public boolean arrived() {
+		return (this.milestoDestination == 0);
+	}
+
+	public void fillGas() {
+		this.fuel = fuelCapacity;
+	}
+
+
+	public double totalWeight(double baseWeight, int passengersWeight, double cargo, Engine engine )
+ 	{
+		 return baseWeight + passengersWeight + Engine.getWeight() + cargo;
 	}
 }

@@ -106,7 +106,7 @@ public class Vehicle
 	{
 		return cargo;
 	}
-	public void addCargo(int cargoChange)
+	public void addCargo(double cargoChange)
 	{
 		cargo = cargo + cargoChange;
 	}
@@ -130,7 +130,7 @@ public class Vehicle
 	{
 		this.money = this.money - money;
 	}
-	public void payment(int money)
+	public void payment(double money)
 	{
 		this.money = this.money + money;
 	}
@@ -141,5 +141,9 @@ public class Vehicle
 	public double balance()
 	{
 		return money;
+	}
+	public double getForwardProgress()
+	{
+		return forwardProgress;
 	}
 }

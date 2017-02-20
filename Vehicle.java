@@ -14,7 +14,9 @@ public class Vehicle
 	private int tires;
 	private double odometer;
 	private double forwardProgress;
-	private Engine engine;
+	private Engine engine = new Engine();
+	private double speed;
+	private double weight;
 	
 	/**
 	* Represents the mile markers for all the gas stops along the way
@@ -32,8 +34,15 @@ public class Vehicle
 	
 	public Vehicle()
 	{
-		Engine V6 = new Engine();
-		this(V6);
+		this.money = 2000;
+		this.fuel = 16.0;
+		this.passengers = 4;
+		this.cargo = 250.0;
+		this.tires = 5;
+		this.odometer = 0.0;
+		this.forwardProgress = 0.0;
+		
+		weight = baseWeight + (passengers * 150) + cargo + engine.getWeight();
 	}
 	
 	public Vehicle(Engine e)
@@ -43,24 +52,26 @@ public class Vehicle
 		this.fuel = 16.0;
 		this.passengers = 4;
 		this.cargo = 250.0;
-		this.tires = 5;
+		this.tires = 4;
 		this.odometer = 0.0;
 		this.forwardProgress = 0.0;
+		
+		weight = baseWeight + (passengers * 150) + cargo + engine.getWeight();
 	}
 	
-	private distanceToNextStop()
+	private double distanceToNextStop()
 	{
 		return ((forwardProgress/200) - (int)(forwardProgress/200)) * 200;
 	}
 	
-	public getSpeed()
+	public double getSpeed()
 	{
-		
+		return speed;
 	}
 	
-	public setSpeed()
+	public void setSpeed(double speed)
 	{
-	
+		this.speed = speed;
 	}
 	
 	public void drive()
@@ -80,5 +91,55 @@ public class Vehicle
 	public double totalWeight()
 	{
 		return baseWeight + (passengers * 150) + cargo;
+	}
+	
+	//beginning of accessors
+	public double getWeight()
+	{
+		return weight;
+	}
+	public double getFuelCapacity()
+	{
+		return fuelCapacity;
+	}
+	public double getCargo()
+	{
+		return cargo;
+	}
+	public void addCargo(int cargoChange)
+	{
+		cargo = cargo + cargoChange;
+	}
+	public double getFuel()
+	{
+		return fuel;
+	}
+	public double getCargoCapacity()
+	{
+		return cargoCapacity;
+	}
+	public Engine getEngine()
+	{
+		return engine;
+	}
+	public void setTires(int tires)
+	{
+		this.tires = tires;
+	}
+	public void pay(double money)
+	{
+		this.money = this.money - money;
+	}
+	public void payment(int money)
+	{
+		this.money = this.money + money;
+	}
+	public void addFuel(double amount)
+	{
+		fuel = fuel + amount;
+	}
+	public double balance()
+	{
+		return money;
 	}
 }

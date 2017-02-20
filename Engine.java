@@ -20,11 +20,11 @@ public class Engine
 	}
 	
 
-	public int getWeight() {
+	public double getWeight() {
 		return weight; 
 	}
 	public double fuelRequired(double distance, double weight, double speed)
 	{
-		return 6.67 * Math.pow(10, -11) * distance * weight * speed * speed;
+		return 6.67 * Math.pow(10, -10) * distance * weight * speed * speed * cylinders;
 	}
 }

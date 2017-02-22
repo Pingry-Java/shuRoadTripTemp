@@ -5,6 +5,10 @@ public class RoadTrip
 	public static void main(String[] args)
 	{
 		//features - a help page, random breakdowns, loading cargo that you are tasked with bringing to another gas station that you sell for money. Ask user for spare tire.
+		//Pretty big bug - I'm pretty sure if the numbers are negative then it gives the user money, takes away cargo, etc. Need to make sure that doesn't happen. 
+		//Another pretty big bug - Right now there are no checks on whether or not the user has exceeded the cargo limit.
+		//Last big bug - The whole cargo delivery thing is broken af. I don't think it's required, it was something I wanted to try. We can just remove it. 
+		//TODO - Fix bugs, implement main game (driving mechanics, travelling, car's breaking down, maybe even passengers dying), make sure requirements are met. I know some of them are not.
 		System.out.println("Welcome to Road Trip! Which vehicle would you like to use? ");
 		System.out.println("Vehicles - " + "\n" + "Bus " + "\n" + "Truck" + "\n" + "Motorcycle" + "\n" +  "Car");
 		
@@ -51,18 +55,15 @@ public class RoadTrip
 		System.out.println("However, the heavier the vehicle and its cargo is, the more fuel it will use. Also, the faster you travel, the more fuel you will use. Right now, it would take " + user.getEngine().fuelRequired(200, carWeight, 50) + " gallons if you were to travel to the next gas station (200 miles) at 50 mph.");
 		//System.out.println("You can access this information at any time by typing help in the command line.");
 		//Todo - make above possible
-		System.out.println("Your journey starts now! Sucessfully get to your destination! Don't run out of fuel! ");
+		System.out.println("Your journey starts now! Sucessfully get to your destination! Good Luck! ");
 		
-		System.out.println("Would you like to buy a spare tire ($50)? There is always a chance of your vehicle having issues! ");
+		System.out.println("Would you like to buy a spare tire ($50)? ");
 		
-		input = keyboard.nextLine();
-		if (input.equals("yes")||input.equals("Yes"));
-		{
-			user.addCargo(15);
-			user.setTires(5);
-			user.pay(50);
-			System.out.println("You have purchased a spare tire. This has increased your cargo by 15 lbs, and you have paid $50");
-		}
+		System.out.println("To start, we will be giving you a spare tire and $50 will be charged. This tire also will take up some cargo space (15 lbs)");
+		user.addCargo(15);
+		user.setTires(5);
+		user.pay(50);
+			
 		
 		boolean gameOver = false;
 		Passenger ps1 = new Passenger("Passenger 1");
@@ -77,8 +78,6 @@ public class RoadTrip
 		*/
 		user.drive();
 		gasStop(user);
-		System.out.println(user.getFuel());
-		System.out.println(user.balance());
 		
 	}
 	public static void gasStop(Vehicle user)
@@ -87,17 +86,20 @@ public class RoadTrip
 		boolean stay = true;
 		double price = Math.random() * (4 - 2 + 1) + 2;
 		double cargoWeight = Math.random() * (75 - 50 + 1) + 25;
-		int deliveryStop = (int) Math.random() * (10 - (int)(user.getForwardProgress()/200) + 1 + 1 ) + 25;
-		//questionable line above
+		int deliveryStop = (int) Math.random() * (10 - (int)(user.getForwardProgress()/200) + 1 + 1 ) + (int)(user.getForwardProgress()/200);
+		//Needs Fixing. 
 		double deliveryPayment = Math.round(Math.random() * (350 - 100 + 1) + 250);	
 		System.out.println("Welcome to the Gas Station!");
 		String input2;
 		while (stay)
 		{
-			System.out.println("What would you like to do? (1-3) ");
+			System.out.println("What would you like to do? (1-6) ");
 			System.out.println("1. Buy Gas");
 			System.out.println("2. Buy Food");
 			System.out.println("3. Deliver Cargo");
+			System.out.println("4. Check on your statistics (Balance, cargo weight, etc.)");
+			System.out.println("5. Buy spare tires");
+			System.out.println("6. Exit");
 			int input = keyboard.nextInt();
 			if(input == 1)
 			{
@@ -120,21 +122,54 @@ public class RoadTrip
 					deliverCargo(user, cargoWeight, deliveryPayment, deliveryStop);
 				}
 			}
+			else if(input == 4)
+			{
+				System.out.println("Which would you like to check?");
+				System.out.println("1. Balance" + "\n" + "2. Fuel and Fuel Efficency" + "\n" + "3. Cargo carried" + "\n" + "4. Food");
+				input = keyboard.nextInt();
+				if (input == 1)
+				{
+					System.out.println("Your Balance - $" + user.balance());
+				}
+				else if(input == 2)
+				{
+					System.out.println("Gas Tank - " + user.getFuel() + "/" + user.getFuelCapacity());
+					System.out.println("To travel to the next gas station (200 miles) travelling at 50 mph, you will need " + user.getEngine().fuelRequired(200, user.totalWeight(), 50));
+				}
+				else if(input == 3)
+				{
+					System.out.println("Cargo - " + user.getCargo());
+				}
+				else if(input == 4)
+				{
+					System.out.println("null");
+				}
+				else
+					System.out.println("Sorry, that is not one of the options.");
+			}
+			else if(input == 5)
+			{
+				System.out.println("How many spare tires would you like? ($50, 15 lbs)");
+				input = keyboard.nextInt();
+				user.pay(50*input);
+				user.addCargo(15*input);
+				user.addTires(input);
+				System.out.println("Thank you!");
+			}
+			else if(input == 6)
+			{
+				stay = false;
+			}
 			else
 				System.out.println("Sorry, that is not one of the options.");
-			
-			System.out.println("Would you like to leave the gas station? ");
-			
-			input2 = keyboard.nextLine();
-			if (input2.equals("yes")||input2.equals("Yes"))
-				stay = false;
+		
 			
 		}
 		
 	}
 	public static void buyGas(double gallons, double price, Vehicle user)
 	{
-		//Todo - Add a feature to back out of buying gas. Also something may be buggy about refund.
+		//Todo - Add a feature to back out of buying gas. 
 		
 		double remainder = 0;
 		if((user.getFuel() + gallons) > user.getFuelCapacity())

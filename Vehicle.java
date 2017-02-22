@@ -146,4 +146,8 @@ public class Vehicle
 	{
 		return forwardProgress;
 	}
+	public void addTires(int tires)
+	{
+		this.tires = this.tires + tires;
+	}
 }

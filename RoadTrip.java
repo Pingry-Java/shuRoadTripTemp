@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 public class RoadTrip
 {
 	
@@ -6,9 +7,10 @@ public class RoadTrip
 	{
 		//features - a help page, random breakdowns, loading cargo that you are tasked with bringing to another gas station that you sell for money. Ask user for spare tire.
 		//Pretty big bug - I'm pretty sure if the numbers are negative then it gives the user money, takes away cargo, etc. Need to make sure that doesn't happen. 
-		//Another pretty big bug - Right now there are no checks on whether or not the user has exceeded the cargo limit.
+		//Another pretty big bug - Right now there are no checks on whether or not the user has exceeded the cargo limit. deliverCargo itself is just broken. 
 		//Last big bug - The whole cargo delivery thing is broken af. I don't think it's required, it was something I wanted to try. We can just remove it. 
-		//TODO - Fix bugs, implement main game (driving mechanics, travelling, car's breaking down, maybe even passengers dying), make sure requirements are met. I know some of them are not.
+		//TODO - Fix bugs, implement main game (driving mechanics, travelling, car's breaking down, maybe even passengers dying), make sure requirements are met. I know some of them are not. One example is the chose # of passengers. One possible way is to make a 2D arr.
+		//There's more bugs/todos scattered below.
 		System.out.println("Welcome to Road Trip! Which vehicle would you like to use? ");
 		System.out.println("Vehicles - " + "\n" + "Bus " + "\n" + "Truck" + "\n" + "Motorcycle" + "\n" +  "Car");
 		
@@ -64,6 +66,12 @@ public class RoadTrip
 		user.setTires(5);
 		user.pay(50);
 			
+		System.out.println("We will also give you some food to start out. This will allow you to feed your passengers.");
+		Food pizza = new Pizza();
+		Food salad = new Salad();
+		Food cookie = new Cookie();
+		Food burger = new Burger();
+		
 		
 		boolean gameOver = false;
 		Passenger ps1 = new Passenger("Passenger 1");
@@ -77,10 +85,10 @@ public class RoadTrip
 		}
 		*/
 		user.drive();
-		gasStop(user);
+		gasStop(user, ps1, cookie);
 		
 	}
-	public static void gasStop(Vehicle user)
+	public static void gasStop(Vehicle user, Passenger ps1, Food cookie)
 	{
 		Scanner keyboard = new Scanner(System.in);
 		boolean stay = true;
@@ -93,13 +101,14 @@ public class RoadTrip
 		String input2;
 		while (stay)
 		{
-			System.out.println("What would you like to do? (1-6) ");
+			System.out.println("What would you like to do? (1-7) ");
 			System.out.println("1. Buy Gas");
 			System.out.println("2. Buy Food");
 			System.out.println("3. Deliver Cargo");
 			System.out.println("4. Check on your statistics (Balance, cargo weight, etc.)");
 			System.out.println("5. Buy spare tires");
-			System.out.println("6. Exit");
+			System.out.println("6. Feed passengers");
+			System.out.println("7. Exit");
 			int input = keyboard.nextInt();
 			if(input == 1)
 			{
@@ -110,7 +119,7 @@ public class RoadTrip
 			else if (input == 2)
 			{
 				System.out.println("Welcome to the food shop! What would you like? ");
-				System.out.println("1. Pizza [20 Food Points] ($15) " + "\n" + "2. Burger [25 Food Points] ($20)" + "\n" + "3. Cookie [5 Food Points, 5 Happiness] ($5)" + "4. Salad [30 Food Points, -2 Happiness] ($20)");	
+				System.out.println("1. Pizza [20 Food Points] ($15) " + "\n" + "2. Burger [25 Food Points] ($20)" + "\n" + "3. Cookie [5 Food Points] ($5)" + "\n" + "4. Salad [30 Food Points] ($20)");	
 				buyFood(keyboard.nextInt(), user);
 			}
 			else if(input == 3)
@@ -158,6 +167,13 @@ public class RoadTrip
 			}
 			else if(input == 6)
 			{
+				//not comeplete, needs the choose how many passengers feature to be working, and the drive stuff to have a correlation with food.
+				//Also, its pretty annoying to have to pass all of the arguements in, so hopefully that can be fixed.
+				ps1.feed(cookie);
+				System.out.println(ps1.getFoodBar());
+			}
+			else if(input == 7)
+			{
 				stay = false;
 			}
 			else
@@ -197,7 +213,6 @@ public class RoadTrip
 		if (food == 1)
 		{
 			user.pay(15 * quantity);
-			//todo - feeding system, maybe it increases weight but i don't think that is needed. 
 		}
 		else if (food == 2)
 		{

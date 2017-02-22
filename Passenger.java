@@ -11,15 +11,24 @@ public class Passenger
 		isDead = false;
 		this.name = name;
 	}
-	public void feed(int food)
+	public void feed(Food food)
 	{
-		foodBar = foodBar + food;
+		
+		if (food.getQuantity() > 0)
+		{
+			foodBar = foodBar + food.getHungerValue();
+			food.removeQuantity(1);
+		}
 		if (foodBar > 100)
 			foodBar = 100;
 	}
 	public String getName()
 	{
 		return name;
+	}
+	public int getFoodBar()
+	{
+		return foodBar;
 	}
 	
 }

@@ -10,23 +10,43 @@ public class RoadTrip
 		
 		Scanner keyboard = new Scanner(System.in);
 		String userVehicle;
+		String input;
 		
 		userVehicle = keyboard.nextLine();
 		
-		System.out.println("Great Choice!");
 		Vehicle user;
 		if (userVehicle.equals("Motorcycle"))
 			user = new Motorcycle();
 		else if (userVehicle.equals("Truck"))
 			user = new Truck();
 		else if (userVehicle.equals("Bus"))
+		{
 			user = new Bus();
-		else
+			System.out.println("You have picked Bus.");
+		}
+		else if(userVehicle.equals("Car"))
 			user = new Car();
+		else
+		{
+			user = new Car();
+			System.out.println("That option was not detected. You have been given a car.");
+		}
+		System.out.println("Enter Space to Continue.");
+		while (!keyboard.nextLine().equals(" "))
+		{
+			System.out.println("Enter Space to Continue.");
+		}
+		System.out.println("\n"+"\n");
 		
 		double carWeight = user.getWeight();
 		System.out.println("Before you start your trip, there's a few things you might want to know about your Vehicle. " + "\n" + "It can hold up to " + user.getFuelCapacity() + " gallons of fuel at a time. You start with a full tank.");
 		System.out.println("Your vehicle can store up to " + user.getCargoCapacity() + " lbs of cargo and it currently holds " + user.getCargo() + " lbs.");
+		System.out.println("Enter Space to Continue.");
+		while (!keyboard.nextLine().equals(" "))
+		{
+			System.out.println("Enter Space to Continue.");
+		}
+		System.out.println("\n"+"\n");
 		System.out.println("To refuel your vehicle, there will be gas stations. At gas stations, you will be able to recieve assignments to deliver cargo. You can decline the offers. If you accept and suceed, you will be paid. You can also buy food to feed your passengers.");
 		System.out.println("However, the heavier the vehicle and its cargo is, the more fuel it will use. Also, the faster you travel, the more fuel you will use. Right now, it would take " + user.getEngine().fuelRequired(200, carWeight, 50) + " gallons if you were to travel to the next gas station (200 miles) at 50 mph.");
 		//System.out.println("You can access this information at any time by typing help in the command line.");
@@ -35,7 +55,8 @@ public class RoadTrip
 		
 		System.out.println("Would you like to buy a spare tire ($50)? There is always a chance of your vehicle having issues! ");
 		
-		if (keyboard.nextLine().equals("yes")||keyboard.nextLine().equals("Yes"));
+		input = keyboard.nextLine();
+		if (input.equals("yes")||input.equals("Yes"));
 		{
 			user.addCargo(15);
 			user.setTires(5);
@@ -70,26 +91,27 @@ public class RoadTrip
 		//questionable line above
 		double deliveryPayment = Math.round(Math.random() * (350 - 100 + 1) + 250);	
 		System.out.println("Welcome to the Gas Station!");
+		String input2;
 		while (stay)
 		{
 			System.out.println("What would you like to do? (1-3) ");
 			System.out.println("1. Buy Gas");
 			System.out.println("2. Buy Food");
 			System.out.println("3. Deliver Cargo");
-			
-			if(keyboard.nextInt() == 1)
+			int input = keyboard.nextInt();
+			if(input == 1)
 			{
 				System.out.println("Gas Tank - " + user.getFuel() + "/" + user.getFuelCapacity());
 				System.out.println("How much gas would you like to buy? The price is $" + price);
 				buyGas(keyboard.nextInt(), price, user);
 			}
-			else if (keyboard.nextInt() == 2)
+			else if (input == 2)
 			{
 				System.out.println("Welcome to the food shop! What would you like? ");
 				System.out.println("1. Pizza [20 Food Points] ($15) " + "\n" + "2. Burger [25 Food Points] ($20)" + "\n" + "3. Cookie [5 Food Points, 5 Happiness] ($5)" + "4. Salad [30 Food Points, -2 Happiness] ($20)");	
 				buyFood(keyboard.nextInt(), user);
 			}
-			else if(keyboard.nextInt() == 3)
+			else if(input == 3)
 			{
 				System.out.println("Please deliver " + cargoWeight + " lbs of cargo to gas stop number " + deliveryStop + " (you are at stop " + (int)(user.getForwardProgress()/200) + ") for $" + deliveryPayment);
 				System.out.println("Do you accept? (y/n) ");
@@ -100,8 +122,11 @@ public class RoadTrip
 			}
 			else
 				System.out.println("Sorry, that is not one of the options.");
+			
 			System.out.println("Would you like to leave the gas station? ");
-			if (keyboard.nextLine().equals("yes")||keyboard.nextLine().equals("Yes"))
+			
+			input2 = keyboard.nextLine();
+			if (input2.equals("yes")||input2.equals("Yes"))
 				stay = false;
 			
 		}

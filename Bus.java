@@ -1,9 +1,13 @@
 public class Bus extends Vehicle
 {
-	private Engine myEngine;
-	public Bus(Passenger[] arr)
-	{
-		super(arr);
-	}
 	
+	
+
+
+	public Bus(int passengers)
+	{
+		super(new Engine(2, 200), 60, passengers, 30, 900, 4, 2, 14400);
+	}
+
+
 }

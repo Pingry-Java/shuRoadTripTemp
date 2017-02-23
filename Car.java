@@ -1,28 +1,10 @@
 public class Car extends Vehicle
 {
-	private Engine myEngine = new Engine();
-	private double weight;
-	
-	public Car()
-	{
 
-		this(new Engine());
 
-	}
-	
-	public Car(Engine e)
+	public Car(int passengers)
 	{
-		super(e);
+		super( new Engine(2, 90), 16, passengers, 6, 250, 4, 1, 4000); 
+		
 	}
-	
-	public Car(Engine e, double f , int  passengers, double cargo, int tires, double baseWeight)
-	{
-		super(e, f, passengers, cargo, tires, baseWeight);
-	}
-	
-	public Car(Passenger[] arr)
-	{
-		super(arr);
-	}
-	
 }

@@ -1,6 +1,8 @@
+
 public class Vehicle
 {
-	private static double fuelCapacity = 16.0;
+	
+	private static double fuelCapacity = 16.0; 
 	private static int seats = 4;
 	private static double cargoCapacity = 500;
 	private static int wheels = 4;
@@ -12,17 +14,19 @@ public class Vehicle
 	private int passengers;
 	private double cargo;
 	private int tires;
+	private int origTires;
+	private Passenger[] passengersArr;
 	private double odometer;
 	private double forwardProgress;
 	private Engine engine = new Engine();
 	private double speed;
 	private double weight;
+	private boolean stranded = false;
 	
 	/**
 	* Represents the mile markers for all the gas stops along the way
 	*/
 	private static int[] gasStops;
-	
 	// This thing is called a static initializer
 	static
 	{
@@ -36,12 +40,14 @@ public class Vehicle
 	{
 		this.money = 2000;
 		this.fuel = 16.0;
-		this.passengers = 4;
+		this.passengers = 1;
 		this.cargo = 250.0;
 		this.tires = 5;
 		this.odometer = 0.0;
 		this.forwardProgress = 0.0;
-		
+		this.passengersArr = new Passenger[passengers];
+		for(int i = 0; i < passengersArr.length; i++)
+			passengersArr[i] = new Passenger("No-Name");
 		weight = baseWeight + (passengers * 150) + cargo + engine.getWeight();
 	}
 	
@@ -55,8 +61,22 @@ public class Vehicle
 		this.tires = 4;
 		this.odometer = 0.0;
 		this.forwardProgress = 0.0;
-		
+		this.passengersArr = new Passenger[passengers];
+		for(int i = 0; i < passengersArr.length; i++)
+			passengersArr[i] = new Passenger("No-Name");
 		weight = baseWeight + (passengers * 150) + cargo + engine.getWeight();
+	}
+	
+	public Vehicle(Passenger[] pArr)
+	{
+		this();
+		this.passengersArr = pArr;
+		
+	}
+		public Vehicle(Passenger[] pArr, Engine e)
+	{
+		this(e);
+		this.passengersArr = pArr;
 	}
 	
 	private double distanceToNextStop()
@@ -150,4 +170,23 @@ public class Vehicle
 	{
 		this.tires = this.tires + tires;
 	}
+	public boolean isStranded()
+	{
+		if (this.stranded)
+			return true;
+		if (this.fuel <= 0)
+			return true;
+		if (tires<origTires)
+			return true;
+		for (Passenger p:passengersArr)
+			if (p.getDead())
+				return true; //assuming you can't kill your passengers...
+		return false;
+	}
+	
+	public Passenger[] getPassengers()
+	{
+		return passengersArr;
+	}
+
 }

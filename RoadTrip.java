@@ -6,7 +6,7 @@ public class RoadTrip
 	public static void main(String[] args)
 	{
 		//features - a help page, random breakdowns, loading cargo that you are tasked with bringing to another gas station that you sell for money. Ask user for spare tire.
-		//Pretty big bug - I'm pretty sure if the numbers are negative then it gives the user money, takes away cargo, etc. Need to make sure that doesn't happen. 
+		//Pretty big bug - I'm pretty sure if the numbers are negative then it gives the user money, takes away cargo, etc. Need to make sure that doesn't happen.
 		//Another pretty big bug - Right now there are no checks on whether or not the user has exceeded the cargo limit. deliverCargo itself is just broken. 
 		//Last big bug - The whole cargo delivery thing is broken af. I don't think it's required, it was something I wanted to try. We can just remove it. 
 		//TODO - Fix bugs, implement main game (driving mechanics, travelling, car's breaking down, maybe even passengers dying), make sure requirements are met. I know some of them are not. One example is the chose # of passengers. One possible way is to make a 2D arr.
@@ -19,22 +19,30 @@ public class RoadTrip
 		String input;
 		
 		userVehicle = keyboard.nextLine();
-		
+		System.out.println("Please enter the number of people.");
+		int numPeople = keyboard.nextInt();
+		keyboard.nextLine();
+		Passenger[] myPassengers = new Passenger[numPeople];
+		for (int i = 0; i < numPeople; i++)
+		{
+			System.out.println("Enter name: ");
+			myPassengers[i] = new Passenger(keyboard.nextLine());
+		}
 		Vehicle user;
 		if (userVehicle.equals("Motorcycle"))
-			user = new Motorcycle();
+			user = new Motorcycle(myPassengers);
 		else if (userVehicle.equals("Truck"))
-			user = new Truck();
+			user = new Truck(myPassengers);
 		else if (userVehicle.equals("Bus"))
 		{
-			user = new Bus();
+			user = new Bus(myPassengers);
 			System.out.println("You have picked Bus.");
 		}
 		else if(userVehicle.equals("Car"))
-			user = new Car();
+			user = new Car(myPassengers);
 		else
 		{
-			user = new Car();
+			user = new Car(myPassengers);
 			System.out.println("That option was not detected. You have been given a car.");
 		}
 		System.out.println("Enter Space to Continue.");
@@ -71,19 +79,36 @@ public class RoadTrip
 		Food burger = new Burger();
 		
 		
-		boolean gameOver = false;
+		
 		Passenger ps1 = new Passenger("Passenger 1");
 		Passenger ps2 = new Passenger("Passenger 2");
 		Passenger ps3 = new Passenger("Passenger 3");
 		Passenger player = new Passenger("Player");
-		/*
-		while (gameOver != true)
+	
+		while (!user.isStranded())
 		{
-			
+			gasStop(user, ps1, cookie);
+		
+			System.out.println("Is there a set distance you'd like to drive? y/n");
+			input = keyboard.nextLine();
+			while (input.equals("y"))
+			{
+				System.out.println("How far would you like to drive?");
+				double distance = (double) keyboard.nextInt();
+				keyboard.nextLine();
+				user.drive(distance);
+				if (user.isStranded())
+				{
+					System.out.println("You were stranded...");
+					System.exit(0);
+				}
+				System.out.println("'y' to drive a specific distance again. 'n' to drive to the next stop.");
+				input = keyboard.nextLine();
+			}
+			user.drive();
 		}
-		*/
-		user.drive();
-		gasStop(user, ps1, cookie);
+		
+		
 		
 	}
 	public static void gasStop(Vehicle user, Passenger ps1, Food cookie)

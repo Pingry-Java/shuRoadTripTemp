@@ -53,13 +53,11 @@ public class RoadTrip
 			System.out.println("Enter Space to Continue.");
 		}
 		System.out.println("\n"+"\n");
-		System.out.println("To refuel your vehicle, there will be gas stations. At gas stations, you will be able to recieve assignments to deliver cargo. You can decline the offers. If you accept and suceed, you will be paid. You can also buy food to feed your passengers.");
+		System.out.println("To refuel your vehicle, there will be gas stations. At gas stations, you will be able to recieve assignments to deliver cargo. You can decline the offers. If you accept and succeed, you will be paid. You can also buy food to feed your passengers.");
 		System.out.println("However, the heavier the vehicle and its cargo is, the more fuel it will use. Also, the faster you travel, the more fuel you will use. Right now, it would take " + user.getEngine().fuelRequired(200, carWeight, 50) + " gallons if you were to travel to the next gas station (200 miles) at 50 mph.");
 		//System.out.println("You can access this information at any time by typing help in the command line.");
 		//Todo - make above possible
 		System.out.println("Your journey starts now! Sucessfully get to your destination! Good Luck! ");
-		
-		System.out.println("Would you like to buy a spare tire ($50)? ");
 		
 		System.out.println("To start, we will be giving you a spare tire and $50 will be charged. This tire also will take up some cargo space (15 lbs)");
 		user.addCargo(15);
@@ -195,7 +193,7 @@ public class RoadTrip
 			user.addFuel(gallons - remainder);//questionable math
 			System.out.println("That amount is too much. Your tank has been filled and $" + remainder*price + " have been refunded.");
 			user.payment(remainder*price);
-			user.addFuel(remainder);
+			//user.addFuel(remainder);
 		}
 		else
 		{

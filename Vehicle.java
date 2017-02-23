@@ -38,7 +38,7 @@ public class Vehicle
 	public Vehicle()
 	{
 
-		this(engine);
+		this(new Engine());
 
 	}
 	
@@ -74,9 +74,12 @@ public class Vehicle
 		this.passengersArr = pArr;
 	}
 	
-	private double distanceToNextStop()
+	public double distanceToNextStop()
 	{
-		return ((forwardProgress/200) - (int)(forwardProgress/200)) * 200;
+		if (((forwardProgress/200) - (int)(forwardProgress/200)) * 200 == 0)
+			return 200;
+		else
+			return ((forwardProgress/200) - (int)(forwardProgress/200)) * 200;
 	}
 	
 	public double getSpeed()
@@ -91,14 +94,14 @@ public class Vehicle
 	
 	public void drive()
 	{
-		fuel -= engine.fuelRequired(this.distanceToNextStop(), this.totalWeight(), this.getSpeed());
+		setFuel(fuel - engine.fuelRequired(this.distanceToNextStop(), this.totalWeight(), this.getSpeed()));
 		milesToDestination -= this.distanceToNextStop();
 		forwardProgress += this.distanceToNextStop();
 	}
 	
 	public void drive(double minDistance)
 	{
-		fuel -= engine.fuelRequired(minDistance, this.totalWeight(), this.getSpeed());
+		setFuel(fuel - engine.fuelRequired(this.distanceToNextStop(), this.totalWeight(), this.getSpeed()));
 		milesToDestination -= minDistance;
 		forwardProgress += minDistance;
 	}
@@ -109,6 +112,10 @@ public class Vehicle
 	}
 	
 	//beginning of accessors
+	public void setFuel(double amount)
+	{
+		fuel = amount;
+	}
 	public double getWeight()
 	{
 		return weight;
@@ -177,6 +184,10 @@ public class Vehicle
 			if (p.getDead())
 				return true; //assuming you can't kill your passengers...
 		return false;
+	}
+	public boolean isStranded(boolean tf)//for passengers starving.
+	{
+		return tf;
 	}
 	
 	public Passenger[] getPassengers()

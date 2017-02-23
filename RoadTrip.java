@@ -72,7 +72,7 @@ public class RoadTrip
 		}
 		System.out.println("\n"+"\n");
 		System.out.println("To refuel your vehicle, there will be gas stations. At gas stations, you will be able to recieve assignments to deliver cargo. You can decline the offers. If you accept and succeed, you will be paid. You can also buy food to feed your passengers.");
-		System.out.println("However, the heavier the vehicle and its cargo is, the more fuel it will use. Also, the faster you travel, the more fuel you will use. Right now, it would take " + user.getEngine().fuelRequired(200, carWeight, 50) + " gallons if you were to travel to the next gas station (200 miles) at 50 mph.");
+		System.out.println("However, the heavier the vehicle and its cargo is, the more fuel it will use. Also, the faster you travel, the more fuel you will use. Right now, it would take " + user.getEngine().fuelRequired(user.distanceToNextStop(), user.totalWeight(), 50) + " gallons if you were to travel to the next gas station (200 miles) at 50 mph.");
 		//System.out.println("You can access this information at any time by typing help in the command line.");
 		//Todo - make above possible
 		System.out.println("Your journey starts now! Sucessfully get to your destination! Good Luck! ");
@@ -99,7 +99,6 @@ public class RoadTrip
 		Passenger ps2 = new Passenger("Passenger 2");
 		Passenger ps3 = new Passenger("Passenger 3");
 		Passenger player = new Passenger("Player");
-	
 		while (!user.isStranded())
 		{
 			gasStop(user, myPassengers, foods);
@@ -111,13 +110,19 @@ public class RoadTrip
 				double distance = (double) keyboard.nextInt();
 				keyboard.nextLine();
 				user.drive(distance);
+				removeFood(myPassengers, distance);
+				user.addFuel(0 - user.getEngine().fuelRequired(distance, user.totalWeight(), 50));
 				user.ifStranded();
 				user.ifWin();
 				System.out.println("'y' to drive a specific distance again. 'n' to drive to the next stop.");
 				input = keyboard.nextLine();
 			}
 			user.drive();
+			user.addFuel(0 - user.getEngine().fuelRequired(200, user.totalWeight(), 50));
+			removeFood(myPassengers, 200);
 			user.ifStranded();
+			myPassengers[0].check();
+			user.isStranded(myPassengers[0].getIsDead());
 			user.ifWin();
 		}
 		
@@ -243,33 +248,37 @@ public class RoadTrip
 	public static void buyFood(int food, Vehicle user, Passenger[] ps, ArrayList<Food> foods)
 	{
 		Scanner keyboard = new Scanner(System.in);
-		//int quantity = 0;
-		//System.out.println("How many would you like? ");
-		//quantity = keyboard.nextInt();
+		int quantity = 0;
+		System.out.println("How many would you like? ");
+		quantity = keyboard.nextInt();
 		if (food == 1)
 		{
-			user.pay(15);
-			for(int i = 0; i < ps.length; i++)
-				ps[i].feed(foods.get(0));
+			user.pay(15*quantity);
+			for(int z = 0; z < quantity; z++)
+				for(int i = 0; i < ps.length; i++)
+					ps[i].feed(foods.get(0));
 		}
 		else if (food == 2)
 		{
-			user.pay(20);
-			for(int i = 0; i < ps.length; i++)
-				ps[i].feed(foods.get(1));
+			user.pay(20*quantity);
+			for(int z = 0; z < quantity; z++)
+				for(int i = 0; i < ps.length; i++)
+					ps[i].feed(foods.get(1));
 		}
 		else if (food == 3)
 		{
-			user.pay(5);
-			for(int i = 0; i < ps.length; i++)
-				ps[i].feed(foods.get(2));
+			user.pay(5*quantity);
+			for(int z = 0; z < quantity; z++)
+				for(int i = 0; i < ps.length; i++)
+					ps[i].feed(foods.get(2));
 			
 		}
 		else if (food == 4)
 		{
-			user.pay(20);
-			for(int i = 0; i < ps.length; i++)
-				ps[i].feed(foods.get(3));
+			user.pay(20*quantity);
+			for(int z = 0; z < quantity; z++)
+				for(int i = 0; i < ps.length; i++)
+					ps[i].feed(foods.get(3));
 			
 		}
 	}
@@ -284,12 +293,14 @@ public class RoadTrip
 	public static void passCheck(Passenger[] ps)
 	{
 		System.out.println("Food Bar - " + ps[0].getFoodBar() + "/500");
-		System.out.println("Status of passengers - ");
-		if(ps[0].getIsDead() == false)
-			System.out.print(ps[0].getName() + " is still alive.");
-		else
-			System.out.println("There's a bug! You should not be on this page because your passengers are dead!");
-		
 	}
+	public static void removeFood(Passenger[] ps, double distance)
+	{
+		for (int i = 0; i < ps.length; i++)
+		{
+			ps[i].eat(distance*2);
+		}
+	}
+	
 	
 }

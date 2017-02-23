@@ -1,12 +1,13 @@
 public class Car extends Vehicle
 {
-	private Engine myEngine;
+	private Engine myEngine = new Engine();
 	private double weight;
 	
 	public Car()
 	{
-		myEngine = new Engine();
-		this(Engine e);
+
+		this(new Engine());
+
 	}
 	
 	public Car(Engine e)

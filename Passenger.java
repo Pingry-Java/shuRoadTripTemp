@@ -1,19 +1,19 @@
 public class Passenger
 {
-	private int foodBar;
+	private double foodBar;
 	private boolean isDead;
 	private int happiness;
 	private String name;
 	public Passenger()
 	{
-		foodBar = 400;
+		foodBar = 500;
 		happiness = 100;
 		isDead = false;
 		this.name = "Miro";
 	}
 	public Passenger(String name)
 	{
-		foodBar = 400;
+		foodBar = 500;
 		happiness = 100;
 		isDead = false;
 		this.name = name;
@@ -22,13 +22,13 @@ public class Passenger
 	{
 		foodBar = foodBar + food.getHungerValue();
 		if (foodBar > 500)
-			foodBar = 400;
+			foodBar = 500;
 	}
 	public String getName()
 	{
 		return name;
 	}
-	public int getFoodBar()
+	public double getFoodBar()
 	{
 		return foodBar;
 	}
@@ -38,7 +38,7 @@ public class Passenger
 			return true;
 		return false;
 	}
-	public void eat(int remove)
+	public void eat(double remove)
 	{
 		foodBar = foodBar - remove;
 	}
@@ -53,5 +53,6 @@ public class Passenger
 	{
 		return isDead;
 	}
+
 	
 }

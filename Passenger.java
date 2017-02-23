@@ -32,12 +32,7 @@ public class Passenger
 	{
 		return foodBar;
 	}
-	public boolean getDead()
-	{
-		if (this.isDead)
-			return true;
-		return false;
-	}
+	
 	public void eat(double remove)
 	{
 		foodBar = foodBar - remove;

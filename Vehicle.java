@@ -37,7 +37,9 @@ public class Vehicle
 	
 	public Vehicle()
 	{
-		this(new Engine());
+
+		this(engine);
+
 	}
 	
 	public Vehicle(Engine e)

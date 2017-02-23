@@ -37,12 +37,12 @@ public class Vehicle
 	
 	public Vehicle()
 	{
-		Vehicle(engine);
+		this(new Engine());
 	}
 	
 	public Vehicle(Engine e)
 	{
-		Vehicle(e, 16.0, 4, 250.0, 4, 4000.0);
+		this(e, 16.0, 4, 250.0, 4, 4000.0);
 	}
 	
 	public Vehicle(Engine e, double f , int  passengers, double cargo, int tires, double baseWeight)

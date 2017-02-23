@@ -88,6 +88,11 @@ public class RoadTrip
 		Food cookie = new Cookie();
 		Food burger = new Burger();
 		
+		ArrayList<Food> foods = new ArrayList<Food>();
+		foods.add(pizza);
+		foods.add(burger);
+		foods.add(cookie);
+		foods.add(salad);
 		
 		
 		Passenger ps1 = new Passenger("Passenger 1");
@@ -97,7 +102,7 @@ public class RoadTrip
 	
 		while (!user.isStranded())
 		{
-			gasStop(user, ps1, cookie);
+			gasStop(user, myPassengers, foods);
 			System.out.println("Is there a set distance you'd like to drive? y/n");
 			input = keyboard.nextLine();
 			while (input.equals("y"))
@@ -119,7 +124,7 @@ public class RoadTrip
 		
 		
 	}
-	public static void gasStop(Vehicle user, Passenger ps1, Food cookie)
+	public static void gasStop(Vehicle user, Passenger[] ps, ArrayList<Food> foods)
 	{
 		Scanner keyboard = new Scanner(System.in);
 		boolean stay = true;
@@ -138,7 +143,7 @@ public class RoadTrip
 			System.out.println("3. Deliver Cargo");
 			System.out.println("4. Check on your statistics (Balance, cargo weight, etc.)");
 			System.out.println("5. Buy spare tires");
-			System.out.println("6. Feed passengers");
+			System.out.println("6. Check on the conditions of passengers");
 			System.out.println("7. Exit");
 			int input = keyboard.nextInt();
 			if(input == 1)
@@ -151,7 +156,7 @@ public class RoadTrip
 			{
 				System.out.println("Welcome to the food shop! What would you like? ");
 				System.out.println("1. Pizza [20 Food Points] ($15) " + "\n" + "2. Burger [25 Food Points] ($20)" + "\n" + "3. Cookie [5 Food Points] ($5)" + "\n" + "4. Salad [30 Food Points] ($20)");	
-				buyFood(keyboard.nextInt(), user);
+				buyFood(keyboard.nextInt(), user, ps, foods);
 			}
 			else if(input == 3)
 			{
@@ -200,8 +205,8 @@ public class RoadTrip
 			{
 				//not comeplete, needs the choose how many passengers feature to be working, and the drive stuff to have a correlation with food.
 				//Also, its pretty annoying to have to pass all of the arguements in, so hopefully that can be fixed.
-				ps1.feed(cookie);
-				System.out.println(ps1.getFoodBar());
+				//ps1.feed();
+				passCheck(ps);
 			}
 			else if(input == 7)
 			{
@@ -235,29 +240,36 @@ public class RoadTrip
 		}
 		
 	}
-	public static void buyFood(int food, Vehicle user)
+	public static void buyFood(int food, Vehicle user, Passenger[] ps, ArrayList<Food> foods)
 	{
 		Scanner keyboard = new Scanner(System.in);
-		int quantity = 0;
-		System.out.println("How many would you like? ");
-		quantity = keyboard.nextInt();
+		//int quantity = 0;
+		//System.out.println("How many would you like? ");
+		//quantity = keyboard.nextInt();
 		if (food == 1)
 		{
-			user.pay(15 * quantity);
+			user.pay(15);
+			for(int i = 0; i < ps.length; i++)
+				ps[i].feed(foods.get(0));
 		}
 		else if (food == 2)
 		{
-			user.pay(20 * quantity);
-			
+			user.pay(20);
+			for(int i = 0; i < ps.length; i++)
+				ps[i].feed(foods.get(1));
 		}
 		else if (food == 3)
 		{
-			user.pay(5*quantity);
+			user.pay(5);
+			for(int i = 0; i < ps.length; i++)
+				ps[i].feed(foods.get(2));
 			
 		}
 		else if (food == 4)
 		{
-			user.pay(20*quantity);
+			user.pay(20);
+			for(int i = 0; i < ps.length; i++)
+				ps[i].feed(foods.get(3));
 			
 		}
 	}
@@ -267,6 +279,17 @@ public class RoadTrip
 		user.addCargo(weight);
 		System.out.println("Good luck!");
 		//todo - add a check method to make sure it is delivered.
+	}
+	
+	public static void passCheck(Passenger[] ps)
+	{
+		System.out.println("Food Bar - " + ps[0].getFoodBar() + "/500");
+		System.out.println("Status of passengers - ");
+		if(ps[0].getIsDead() == false)
+			System.out.print(ps[0].getName() + " is still alive.");
+		else
+			System.out.println("There's a bug! You should not be on this page because your passengers are dead!");
+		
 	}
 	
 }

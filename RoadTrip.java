@@ -23,10 +23,20 @@ public class RoadTrip
 		int numPeople = keyboard.nextInt();
 		keyboard.nextLine();
 		Passenger[] myPassengers = new Passenger[numPeople];
-		for (int i = 0; i < numPeople; i++)
+		System.out.println("Would you like to name your passengers? y/n");
+		String nameYN = keyboard.nextLine();
+		if (nameYN.equals("y"))
 		{
-			System.out.println("Enter name: ");
-			myPassengers[i] = new Passenger(keyboard.nextLine());
+			for (int i = 0; i < numPeople; i++)
+			{
+				System.out.println("Enter name: ");
+				myPassengers[i] = new Passenger(keyboard.nextLine());
+			}
+		}
+		if (nameYN.equals("n"))
+		{
+			for (int i = 0; i < numPeople; i++)
+				myPassengers[i] = new Passenger("" + i);
 		}
 		Vehicle user;
 		if (userVehicle.equals("Motorcycle"))
@@ -90,7 +100,6 @@ public class RoadTrip
 		while (!user.isStranded())
 		{
 			gasStop(user, ps1, cookie);
-		
 			System.out.println("Is there a set distance you'd like to drive? y/n");
 			input = keyboard.nextLine();
 			while (input.equals("y"))
@@ -99,15 +108,14 @@ public class RoadTrip
 				double distance = (double) keyboard.nextInt();
 				keyboard.nextLine();
 				user.drive(distance);
-				if (user.isStranded())
-				{
-					System.out.println("You were stranded...");
-					System.exit(0);
-				}
+				user.ifStranded();
+				user.ifWin();
 				System.out.println("'y' to drive a specific distance again. 'n' to drive to the next stop.");
 				input = keyboard.nextLine();
 			}
 			user.drive();
+			user.ifStranded();
+			user.ifWin();
 		}
 		
 		

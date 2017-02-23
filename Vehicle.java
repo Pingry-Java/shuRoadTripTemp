@@ -188,5 +188,21 @@ public class Vehicle
 	{
 		return passengersArr;
 	}
-
+	public void ifWin()
+	{
+		if (this.forwardProgress >= this.milesToDestination)
+		{
+			System.out.println("You made it!!! \n Congratulations!!!");
+			System.exit(0);
+		}
+		
+	}
+	public void ifStranded()
+	{
+		if (isStranded())
+		{
+			System.out.println("You were stranded...");
+			System.exit(0);
+		}
+	}
 }

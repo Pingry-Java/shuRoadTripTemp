@@ -19,9 +19,39 @@ public class RoadTrip
 		String input;
 		
 		userVehicle = keyboard.nextLine();
+
 		System.out.println("Please enter the number of people.");
 		int numPeople = keyboard.nextInt();
 		keyboard.nextLine();
+
+		while ((userVehicle.equals("Motorcycle") & numPeople > 2) || (userVehicle.equals("Car") & numPeople > 6) || (userVehicle.equals("Truck") & numPeople > 6) || (userVehicle.equals("Bus") & numPeople > 30) )  {
+
+			System.out.println("Sorry that is not a valid amount of people for that vehicle. Please see: (Car: Max 6, Bus: Max 30, Motocycle: Max 2, Truck: Max 6). Enter new number: ");
+			numPeople = keyboard.nextInt();
+			keyboard.nextLine();
+
+		}
+
+
+		Vehicle user;
+		if (userVehicle.equals("Motorcycle"))
+			user = new Motorcycle(numPeople);
+		else if (userVehicle.equals("Truck"))
+			user = new Truck(numPeople);
+		else if (userVehicle.equals("Bus"))
+		{
+			user = new Bus(numPeople);
+			System.out.println("You have picked Bus.");
+		}
+		else if(userVehicle.equals("Car"))
+			user = new Car(numPeople);
+		else
+		{
+			user = new Car(numPeople);
+			System.out.println("That option was not detected. You have been given a car.");
+		}
+
+
 		Passenger[] myPassengers = new Passenger[numPeople];
 		System.out.println("Would you like to name your passengers? y/n");
 		String nameYN = keyboard.nextLine();
@@ -38,23 +68,13 @@ public class RoadTrip
 			for (int i = 0; i < numPeople; i++)
 				myPassengers[i] = new Passenger("" + i);
 		}
-		Vehicle user;
-		if (userVehicle.equals("Motorcycle"))
-			user = new Motorcycle(myPassengers);
-		else if (userVehicle.equals("Truck"))
-			user = new Truck(myPassengers);
-		else if (userVehicle.equals("Bus"))
-		{
-			user = new Bus(myPassengers);
-			System.out.println("You have picked Bus.");
-		}
-		else if(userVehicle.equals("Car"))
-			user = new Car(myPassengers);
-		else
-		{
-			user = new Car(myPassengers);
-			System.out.println("That option was not detected. You have been given a car.");
-		}
+		
+
+
+
+
+
+
 		System.out.println("Enter Space to Continue.");
 		while (!keyboard.nextLine().equals(" "))
 		{

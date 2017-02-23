@@ -1,8 +1,8 @@
 public class Motorcycle extends Vehicle
 {
-	private Engine myEngine;
-	public Motorcycle(Passenger[] arr)
+	
+	public Motorcycle(int passengers)
 	{
-		super(arr);
+		super(new Engine(2, 50), 5, passengers, 2, 250, 4, 1, 4000);
 	}
 }

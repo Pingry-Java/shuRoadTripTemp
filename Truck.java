@@ -1,8 +1,11 @@
 public class Truck extends Vehicle
 {
-	private Engine myEngine;
-	public Truck(Passenger[] arr)
+	
+
+
+	public Truck(int passengers)
 	{
-		super(arr);
+		 
+		super(new Engine(2, 250), 120, passengers, 6, 2000, 18, 2, 32000);
 	}
 }

@@ -1,4 +1,3 @@
-
 public class Vehicle
 {
 	
@@ -38,34 +37,28 @@ public class Vehicle
 	
 	public Vehicle()
 	{
-		this.money = 2000;
-		this.fuel = 16.0;
-		this.passengers = 1;
-		this.cargo = 250.0;
-		this.tires = 5;
-		this.odometer = 0.0;
-		this.forwardProgress = 0.0;
-		this.passengersArr = new Passenger[passengers];
-		for(int i = 0; i < passengersArr.length; i++)
-			passengersArr[i] = new Passenger("No-Name");
-		weight = baseWeight + (passengers * 150) + cargo + engine.getWeight();
+		Vehicle(engine);
 	}
 	
 	public Vehicle(Engine e)
 	{
+		Vehicle(e, 16.0, 4, 250.0, 4, 4000.0);
+	}
+	
+	public Vehicle(Engine e, double f , int  passengers, double cargo, int tires, double baseWeight)
+	{
 		this.engine = e;
 		this.money = 2000;
-		this.fuel = 16.0;
-		this.passengers = 4;
-		this.cargo = 250.0;
-		this.tires = 4;
-		this.odometer = 0.0;
+		this.fuel = f;
+		this.passengers = passengers;
+		this.cargo = cargo;
+		this.tires = tires;
+		this.odometer = 0;
 		this.forwardProgress = 0.0;
-		this.passengersArr = new Passenger[passengers];
-		for(int i = 0; i < passengersArr.length; i++)
-			passengersArr[i] = new Passenger("No-Name");
+		
 		weight = baseWeight + (passengers * 150) + cargo + engine.getWeight();
 	}
+
 	
 	public Vehicle(Passenger[] pArr)
 	{

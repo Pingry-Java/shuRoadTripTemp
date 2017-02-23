@@ -1,20 +1,21 @@
 public class Vehicle
-{
-	
+{	
 	private static double fuelCapacity = 16.0; 
 	private static int seats = 4;
 	private static double cargoCapacity = 500;
 	private static int wheels = 4;
 	private static double baseWeight = 4000.0;
-	
+
 	private int milesToDestination = 2893;
 	private double money;
 	private double fuel;
 	private int passengers;
 	private double cargo;
 	private int tires;
+	private int spares;
 	private int origTires;
-	private Passenger[] passengersArr;
+	private int passCap;
+	private Passenger[] passArr;
 	private double odometer;
 	private double forwardProgress;
 	private Engine engine = new Engine();
@@ -35,44 +36,25 @@ public class Vehicle
 			gasStops[i] = gasStops[i - 1] + 200;
 	}
 	
-	public Vehicle()
-	{
-
-		this(new Engine());
-
-	}
 	
-	public Vehicle(Engine e)
-	{
-		this(e, 16.0, 4, 250.0, 4, 4000.0);
-	}
-	
-	public Vehicle(Engine e, double f , int  passengers, double cargo, int tires, double baseWeight)
+	public Vehicle(Engine e, double f , int passengers, int passCap, double cargo, int tires, int spares, double baseWeight)
 	{
 		this.engine = e;
 		this.money = 2000;
 		this.fuel = f;
 		this.passengers = passengers;
+		this.passCap = passCap;
 		this.cargo = cargo;
 		this.tires = tires;
+		this.spares = spares;
 		this.odometer = 0;
 		this.forwardProgress = 0.0;
+		this.passArr = new Passenger[passengers];
 		
 		weight = baseWeight + (passengers * 150) + cargo + engine.getWeight();
 	}
 
-	
-	public Vehicle(Passenger[] pArr)
-	{
-		this();
-		this.passengersArr = pArr;
-		
-	}
-		public Vehicle(Passenger[] pArr, Engine e)
-	{
-		this(e);
-		this.passengersArr = pArr;
-	}
+
 	
 	public double distanceToNextStop()
 	{
@@ -180,9 +162,10 @@ public class Vehicle
 			return true;
 		if (tires<origTires)
 			return true;
-		for (Passenger p:passengersArr)
-			if (p.getDead())
+		for (Passenger p:passArr) {
+			if (p.getIsDead())
 				return true; //assuming you can't kill your passengers...
+		}
 		return false;
 	}
 	public boolean isStranded(boolean tf)//for passengers starving.
@@ -192,7 +175,7 @@ public class Vehicle
 	
 	public Passenger[] getPassengers()
 	{
-		return passengersArr;
+		return passArr;
 	}
 	public void ifWin()
 	{
@@ -211,4 +194,5 @@ public class Vehicle
 			System.exit(0);
 		}
 	}
+
 }

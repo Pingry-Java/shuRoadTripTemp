@@ -30,5 +30,11 @@ public class Passenger
 	{
 		return foodBar;
 	}
+	public boolean getDead()
+	{
+		if (this.isDead)
+			return true;
+		return false;
+	}
 	
 }

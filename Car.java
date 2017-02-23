@@ -7,5 +7,9 @@ public class Car extends Vehicle
 	{
 		myEngine = new Engine();
 	}
+	public Car(Passenger[] arr)
+	{
+		super(arr);
+	}
 	
 }

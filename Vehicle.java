@@ -83,7 +83,7 @@ public class Vehicle
 	
 	public void drive(double minDistance)
 	{
-		setFuel(fuel - engine.fuelRequired(this.distanceToNextStop(), this.totalWeight(), this.getSpeed()));
+		setFuel(fuel - engine.fuelRequired(minDistance, this.totalWeight(), this.getSpeed()));
 		milesToDestination -= minDistance;
 		forwardProgress += minDistance;
 	}
@@ -171,6 +171,7 @@ public class Vehicle
 
 	public boolean isStranded(boolean tf)//for passengers starving.
 	{
+		System.out.println("I starved to death");
 		return tf;
 	}
 

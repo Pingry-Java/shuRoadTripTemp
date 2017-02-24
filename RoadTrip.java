@@ -136,7 +136,7 @@ public class RoadTrip
 				keyboard.nextLine();
 				user.setSpeed(speed);
 				user.drive(distance);
-				removeFood(myPassengers, distance);
+				//removeFood(myPassengers, distance);
 				
 				user.ifStranded();
 				user.ifWin();
@@ -149,10 +149,10 @@ public class RoadTrip
 			user.setSpeed(speed);
 			user.drive();
 			
-			removeFood(myPassengers, 200);
+			//removeFood(myPassengers, 200);
 			user.ifStranded();
-			myPassengers[0].check();
-			user.isStranded(myPassengers[0].getIsDead());
+			//myPassengers[0].check();
+		//	user.isStranded(myPassengers[0].getIsDead());
 			user.ifWin();
 		}
 		

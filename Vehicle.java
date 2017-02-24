@@ -178,7 +178,8 @@ public class Vehicle
 			return true;
 		if (tires<origTires)
 			return true;
-		
+		if (money < 0)
+			return true;
 
 		return false;
 	 }

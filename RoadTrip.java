@@ -82,6 +82,8 @@ public class RoadTrip
 		}
 		System.out.println("\n"+"\n");
 		
+		System.out.println("How to win -  \nGet to the final destination by stopping at gas stops and refilling. \nYou will have passengers to take along. The more passengers, the harder. \nIf a passenger dies, you will lose points, but not lose the game. \nYou will lose if your balance hits zero, or you run out of gas, or if your tire pops and you have no spares.");
+		
 		double carWeight = user.getWeight();
 		System.out.println("Before you start your trip, there's a few things you might want to know about your Vehicle. " + "\n" + "It can hold up to " + user.getFuelCapacity() + " gallons of fuel at a time. You start with a full tank.");
 		System.out.println("Your vehicle can store up to " + user.getCargoCapacity() + " lbs of cargo and it currently holds " + user.getCargo() + " lbs of cargo.");

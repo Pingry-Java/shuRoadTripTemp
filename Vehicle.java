@@ -1,10 +1,9 @@
 public class Vehicle
 {	
-	private static double fuelCapacity = 16.0; 
-	private static int seats = 4;
-	private static double cargoCapacity = 500;
-	private static int wheels = 4;
-	private static double baseWeight = 4000.0;
+	protected static double fuelCapacity = 16.0; 
+	protected static double cargoCapacity = 500;
+	protected static double baseWeight = 4000;
+
 
 	private int milesToDestination = 2893;
 	private double money;
@@ -90,7 +89,7 @@ public class Vehicle
 	
 	public double totalWeight()
 	{
-		return baseWeight + (passengers * 150) + cargo;
+		return baseWeight + (passengers * 150) + cargo + engine.getWeight();
 	}
 	
 	//beginning of accessors

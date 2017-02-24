@@ -84,7 +84,7 @@ public class RoadTrip
 		
 		double carWeight = user.getWeight();
 		System.out.println("Before you start your trip, there's a few things you might want to know about your Vehicle. " + "\n" + "It can hold up to " + user.getFuelCapacity() + " gallons of fuel at a time. You start with a full tank.");
-		System.out.println("Your vehicle can store up to " + user.getCargoCapacity() + " lbs of cargo and it currently holds " + user.getCargo() + " lbs.");
+		System.out.println("Your vehicle can store up to " + user.getCargoCapacity() + " lbs of cargo and it currently holds " + user.getCargo() + " lbs of cargo.");
 		System.out.println("Enter Space to Continue.");
 		while (!keyboard.nextLine().equals(" "))
 		{
@@ -114,11 +114,7 @@ public class RoadTrip
 		foods.add(cookie);
 		foods.add(salad);
 		
-		
-		Passenger ps1 = new Passenger("Passenger 1");
-		Passenger ps2 = new Passenger("Passenger 2");
-		Passenger ps3 = new Passenger("Passenger 3");
-		Passenger player = new Passenger("Player");
+	
 		double distance;
 		double speed;
 		while (!user.isStranded())

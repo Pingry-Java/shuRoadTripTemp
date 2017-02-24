@@ -92,7 +92,7 @@ public class RoadTrip
 		}
 		System.out.println("\n"+"\n");
 		System.out.println("To refuel your vehicle, there will be gas stations. At gas stations, you will be able to recieve assignments to deliver cargo. You can decline the offers. If you accept and succeed, you will be paid. You can also buy food to feed your passengers.");
-		System.out.println("However, the heavier the vehicle and its cargo is, the more fuel it will use. Also, the faster you travel, the more fuel you will use. Right now, it would take " + user.getEngine().fuelRequired(user.distanceToNextStop(), user.totalWeight(), 40) + " gallons if you were to travel to the next gas station (200 miles) at 40 mph.");
+		System.out.println("However, the heavier the vehicle and its cargo is, the more fuel it will use. Also, the faster you travel, the more fuel you will use. Right now, it would take " + user.getEngine().fuelRequired(user.distanceToNextStop(), user.totalWeight(), 10) + " gallons if you were to travel to the next gas station (200 miles) at 10 mph.");
 		//System.out.println("You can access this information at any time by typing help in the command line.");
 		//Todo - make above possible
 		System.out.println("Your journey starts now! Sucessfully get to your destination! Good Luck! ");
@@ -225,7 +225,7 @@ public class RoadTrip
 				else if(input == 2)
 				{
 					System.out.println("Gas Tank - " + user.getFuel() + "/" + user.getFuelCapacity());
-					System.out.println("To travel to the next gas station (200 miles) travelling at 40 mph, you will need " + user.getEngine().fuelRequired(user.distanceToNextStop(), user.totalWeight(), 40));
+					System.out.println("To travel to the next gas station (200 miles) travelling at 10 mph, you will need " + user.getEngine().fuelRequired(user.distanceToNextStop(), user.totalWeight(), 10));
 				}
 				else if(input == 3)
 				{

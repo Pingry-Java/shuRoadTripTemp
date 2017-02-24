@@ -175,7 +175,10 @@ public class Vehicle
 
 	public boolean isStranded(boolean tf)//for passengers starving.
 	{
-		System.out.println("I starved to death");
+		if (tf)
+		{
+			System.out.println("I starved to death");
+		}
 		return tf;
 	}
 

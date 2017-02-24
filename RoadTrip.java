@@ -13,7 +13,7 @@ public class RoadTrip
 		//There's more bugs/todos scattered below.
 		System.out.println("Welcome to Road Trip! Which vehicle would you like to use? ");
 		System.out.println("Vehicles - " + "\n" + "Bus " + "\n" + "Truck" + "\n" + "Motorcycle" + "\n" +  "Car");
-		
+		System.out.println("");
 		Scanner keyboard = new Scanner(System.in);
 		String userVehicle;
 		String input;
@@ -66,7 +66,7 @@ public class RoadTrip
 		if (nameYN.equals("n"))
 		{
 			for (int i = 0; i < numPeople; i++)
-				user.passArr[i] = new Passenger("" + i);
+				user.passArr[i] = new Passenger();
 		}
 		
 
@@ -165,7 +165,7 @@ public class RoadTrip
 		//Needs Fixing. 
 		double deliveryPayment = Math.round(Math.random() * (350 - 100 + 1) + 250);	
 		System.out.println("Welcome to the Gas Station!");
-		System.out.println("You are at gas station number " + user.getForwardProgress()/200);
+		System.out.println("You are at gas station number " + Math.round(user.getForwardProgress()/200));
 		String input2;
 		while (stay)
 		{
@@ -176,7 +176,7 @@ public class RoadTrip
 			System.out.println("4. Check on your statistics (Balance, cargo weight, etc.)");
 			System.out.println("5. Buy spare tires");
 			System.out.println("6. Check on the conditions of passengers");
-			System.out.println("7. Exit");
+			System.out.println("7. Exit and continue travelling");
 			int input = keyboard.nextInt();
 			if(input == 1)
 			{
@@ -202,7 +202,7 @@ public class RoadTrip
 			else if(input == 4)
 			{
 				System.out.println("Which would you like to check?");
-				System.out.println("1. Balance" + "\n" + "2. Fuel and Fuel Efficency" + "\n" + "3. Cargo carried" + "\n" + "4. Food");
+				System.out.println("1. Balance" + "\n" + "2. Fuel and Fuel Efficency" + "\n" + "3. Cargo carried");
 				input = keyboard.nextInt();
 				if (input == 1)
 				{
@@ -217,10 +217,7 @@ public class RoadTrip
 				{
 					System.out.println("Cargo - " + user.getCargo());
 				}
-				else if(input == 4)
-				{
-					System.out.println("null");
-				}
+				
 				else
 					System.out.println("Sorry, that is not one of the options.");
 			}
@@ -276,14 +273,20 @@ public class RoadTrip
 	{
 		Scanner keyboard = new Scanner(System.in);
 		int quantity = 0;
+		int toFeed = 0;
 		System.out.println("How many would you like? ");
 		quantity = keyboard.nextInt();
 		if (food == 1)
 		{
 			user.pay(15*quantity);
+			for (int i = 0; i < ps.length; i++)
+				System.out.println(i+1 + ". " + ps[i].getName());
 			for(int z = 0; z < quantity; z++)
-				for(int i = 0; i < ps.length; i++)
-					ps[i].feed(foods.get(0));
+			{
+				System.out.println("Who would you like to feed? Refer to the list above (1 - " + ps.length + "). Remaining - " + (quantity-z));
+				toFeed = keyboard.nextInt();
+				ps[toFeed-1].feed(foods.get(0));
+			}
 		}
 		else if (food == 2)
 		{
@@ -321,15 +324,19 @@ public class RoadTrip
 	{
 		for (int i = 0; i < ps.length; i++) {
 		ps[i].check();
-		System.out.println("Food Bar of " + "Passenger " + (i + 1) + ", " + ps[i].getName() + ps[i].getFoodBar() + "/500");
-		System.out.println("Status: Alive = " + ps[i].getIsDead() ); }
+		System.out.println("Food Bar of " + "Passenger " + (i + 1) + ", " + ps[i].getName() + " " + ps[i].getFoodBar() + "/500");
+		if(ps[i].getIsDead() == false)
+			System.out.println("Status: Alive" ); 
+		else
+			System.out.println("Status: Dead");
+		}
 
 	}
 	public static void removeFood(Passenger[] ps, double distance)
 	{
 		for (int i = 0; i < ps.length; i++)
 		{
-			ps[i].eat(distance*2);
+			ps[i].eat(distance);
 		}
 	}
 	

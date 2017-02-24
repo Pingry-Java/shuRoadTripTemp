@@ -9,7 +9,7 @@ public class Passenger
 		foodBar = 500;
 		happiness = 100;
 		isDead = false;
-		this.name = "Miro";
+		this.name = "No Name Available";
 	}
 	public Passenger(String name)
 	{

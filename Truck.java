@@ -1,7 +1,9 @@
 public class Truck extends Vehicle
 {
-	
-
+	static {
+	fuelCapacity = 120;
+	cargoCapacity = 2000;
+	baseWeight = 32000; }
 
 	public Truck(int passengers)
 	{

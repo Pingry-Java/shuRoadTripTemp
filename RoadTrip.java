@@ -92,7 +92,7 @@ public class RoadTrip
 		}
 		System.out.println("\n"+"\n");
 		System.out.println("To refuel your vehicle, there will be gas stations. At gas stations, you will be able to recieve assignments to deliver cargo. You can decline the offers. If you accept and succeed, you will be paid. You can also buy food to feed your passengers.");
-		System.out.println("However, the heavier the vehicle and its cargo is, the more fuel it will use. Also, the faster you travel, the more fuel you will use. Right now, it would take " + user.getEngine().fuelRequired(user.distanceToNextStop(), user.totalWeight(), 50) + " gallons if you were to travel to the next gas station (200 miles) at 50 mph.");
+		System.out.println("However, the heavier the vehicle and its cargo is, the more fuel it will use. Also, the faster you travel, the more fuel you will use. Right now, it would take " + user.getEngine().fuelRequired(user.distanceToNextStop(), user.totalWeight(), 40) + " gallons if you were to travel to the next gas station (200 miles) at 40 mph.");
 		//System.out.println("You can access this information at any time by typing help in the command line.");
 		//Todo - make above possible
 		System.out.println("Your journey starts now! Sucessfully get to your destination! Good Luck! ");
@@ -145,7 +145,7 @@ public class RoadTrip
 						if (user.passArr[i].getIsDead() == false)
 							alive++;
 					}
-					score = ((1/travelTime) * (alive + 1)) - (user.balance() * 0.1);
+					score = ((1/travelTime) + (alive + 1)) * 150 - (user.balance() * 0.001);
 					user.ifStranded();
 					user.ifWin(score);
 					System.out.println("'y' to drive a specific distance again. 'n' to drive to the next stop. You MUST end on a stop.");
@@ -169,7 +169,7 @@ public class RoadTrip
 				if (user.passArr[i].getIsDead() == false)
 					alive++;
 			}
-			score = ((1/travelTime) * (alive + 1)) - (user.balance() * 0.1);
+			score = ((1/travelTime) + (alive + 1)) * 150 - (user.balance() * 0.001);
 			user.ifStranded();
 			
 			user.ifWin(score);
@@ -192,14 +192,13 @@ public class RoadTrip
 		String input2;
 		while (stay)
 		{
-			System.out.println("What would you like to do? (1-7) ");
+			System.out.println("What would you like to do? (1-6) ");
 			System.out.println("1. Buy Gas");
 			System.out.println("2. Buy Food");
-			System.out.println("3. Deliver Cargo");
-			System.out.println("4. Check on your statistics (Balance, cargo weight, etc.)");
-			System.out.println("5. Buy spare tires");
-			System.out.println("6. Check on the conditions of passengers");
-			System.out.println("7. Exit and continue travelling");
+			System.out.println("3. Check on your statistics (Balance, cargo weight, etc.)");
+			System.out.println("4. Buy spare tires");
+			System.out.println("5. Check on the conditions of passengers");
+			System.out.println("6. Exit and continue travelling");
 			int input = keyboard.nextInt();
 			if(input == 1)
 			{
@@ -213,16 +212,8 @@ public class RoadTrip
 				System.out.println("1. Pizza [20 Food Points] ($15) " + "\n" + "2. Burger [25 Food Points] ($20)" + "\n" + "3. Cookie [5 Food Points] ($5)" + "\n" + "4. Salad [30 Food Points] ($20)");	
 				buyFood(keyboard.nextInt(), user, ps, foods);
 			}
+			
 			else if(input == 3)
-			{
-				System.out.println("Please deliver " + cargoWeight + " lbs of cargo to gas stop number " + deliveryStop + " (you are at stop " + (int)(user.getForwardProgress()/200) + ") for $" + deliveryPayment);
-				System.out.println("Do you accept? (y/n) ");
-				if (keyboard.nextLine().equals("y"))
-				{
-					deliverCargo(user, cargoWeight, deliveryPayment, deliveryStop);
-				}
-			}
-			else if(input == 4)
 			{
 				System.out.println("Which would you like to check?");
 				System.out.println("1. Balance" + "\n" + "2. Fuel and Fuel Efficency" + "\n" + "3. Cargo carried");
@@ -234,7 +225,7 @@ public class RoadTrip
 				else if(input == 2)
 				{
 					System.out.println("Gas Tank - " + user.getFuel() + "/" + user.getFuelCapacity());
-					System.out.println("To travel to the next gas station (200 miles) travelling at 50 mph, you will need " + user.getEngine().fuelRequired(200, user.totalWeight(), 50));
+					System.out.println("To travel to the next gas station (200 miles) travelling at 40 mph, you will need " + user.getEngine().fuelRequired(user.distanceToNextStop(), user.totalWeight(), 40));
 				}
 				else if(input == 3)
 				{
@@ -244,7 +235,7 @@ public class RoadTrip
 				else
 					System.out.println("Sorry, that is not one of the options.");
 			}
-			else if(input == 5)
+			else if(input == 4)
 			{
 				System.out.println("How many spare tires would you like? ($50, 15 lbs)");
 				input = keyboard.nextInt();
@@ -253,14 +244,14 @@ public class RoadTrip
 				user.addTires(input);
 				System.out.println("Thank you!");
 			}
-			else if(input == 6)
+			else if(input == 5)
 			{
 				//not comeplete, needs the choose how many passengers feature to be working, and the drive stuff to have a correlation with food.
 				//Also, its pretty annoying to have to pass all of the arguements in, so hopefully that can be fixed.
 				//ps1.feed();
 				passCheck(ps);
 			}
-			else if(input == 7)
+			else if(input == 6)
 			{
 				stay = false;
 			}

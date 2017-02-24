@@ -179,13 +179,6 @@ public class Vehicle
 		if (tires<origTires)
 			return true;
 		
-		int count = 0;
-		for (Passenger p: passArr) {
-			if (p.getIsDead()) {
-				count += 1; //assuming you can't kill your passengers...
-		} }
-		if (count == passArr.length)
-			return true; 
 
 		return false;
 	 }

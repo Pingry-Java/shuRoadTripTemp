@@ -29,6 +29,6 @@ public class Engine
 		{
 			return -1;
 		}
-		return 6.67 * Math.pow(10, -10) * distance * weight * speed * speed * cylinders;
+		return 1.23 * Math.pow(10, -10) * distance * weight * speed * speed * cylinders;
 	}
 }

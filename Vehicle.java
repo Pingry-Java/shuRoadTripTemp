@@ -14,7 +14,7 @@ public class Vehicle
 	private int spares;
 	private int origTires;
 	private int passCap;
-	private Passenger[] passArr;
+	public Passenger[] passArr;
 	private double odometer;
 	private double forwardProgress;
 	private Engine engine = new Engine();

@@ -52,7 +52,7 @@ public class RoadTrip
 		}
 
 
-		Passenger[] myPassengers = new Passenger[numPeople];
+
 		System.out.println("Would you like to name your passengers? y/n");
 		String nameYN = keyboard.nextLine();
 		if (nameYN.equals("y"))
@@ -60,19 +60,19 @@ public class RoadTrip
 			for (int i = 0; i < numPeople; i++)
 			{
 				System.out.println("Enter name: ");
-				myPassengers[i] = new Passenger(keyboard.nextLine());
+				user.passArr[i] = new Passenger(keyboard.nextLine());
 			}
 		}
 		if (nameYN.equals("n"))
 		{
 			for (int i = 0; i < numPeople; i++)
-				myPassengers[i] = new Passenger("" + i);
+				user.passArr[i] = new Passenger("" + i);
 		}
 		
 
 
 
-		user.setPass(myPassengers);
+		user.setPass(user.passArr);
 
 
 		System.out.println("Enter Space to Continue.");
@@ -119,7 +119,7 @@ public class RoadTrip
 		double speed;
 		while (!user.isStranded())
 		{
-			gasStop(user, myPassengers, foods);
+			gasStop(user, user.passArr, foods);
 			System.out.println("Is there a set distance you'd like to drive? y/n");
 			input = keyboard.nextLine();
 			while (input.equals("y"))
@@ -132,7 +132,7 @@ public class RoadTrip
 				keyboard.nextLine();
 				user.setSpeed(speed);
 				user.drive(distance);
-				//removeFood(myPassengers, distance);
+				removeFood(user.passArr, distance);
 				
 				user.ifStranded();
 				user.ifWin();
@@ -145,10 +145,10 @@ public class RoadTrip
 			user.setSpeed(speed);
 			user.drive();
 			
-			//removeFood(myPassengers, 200);
+			removeFood(user.passArr, 200);
 			user.ifStranded();
-			//myPassengers[0].check();
-		//	user.isStranded(myPassengers[0].getIsDead());
+			user.passArr[0].check();
+			user.isStranded(user.passArr[0].getIsDead());
 			user.ifWin();
 		}
 		
@@ -318,7 +318,11 @@ public class RoadTrip
 	
 	public static void passCheck(Passenger[] ps)
 	{
-		System.out.println("Food Bar - " + ps[0].getFoodBar() + "/500");
+		for (int i = 0; i < ps.length; i++) {
+		ps[i].check();
+		System.out.println("Food Bar of " + "Passenger " + (i + 1) + ", " + ps[i].getName() + ps[i].getFoodBar() + "/500");
+		System.out.println("Status: Alive = " + ps[i].getIsDead() ); }
+
 	}
 	public static void removeFood(Passenger[] ps, double distance)
 	{

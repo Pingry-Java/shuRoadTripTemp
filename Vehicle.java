@@ -87,8 +87,26 @@ public class Vehicle
 		fuel = fuel - engine.fuelRequired(this.distanceToNextStop(), this.totalWeight(), this.getSpeed());
 		milesToDestination -= this.distanceToNextStop();
 		forwardProgress += this.distanceToNextStop();
+
+		this.checkTires();
+
+		
 	}
-	
+	public void checkTires() {
+
+		if(Math.random() < 0.25) { //25 chance of flat
+		System.out.println("A tire popped.");
+		if (this.spares > 0) {
+			spares --;
+			System.out.println("Using a spare. You have " + spares + " spares left.");
+		}
+		else {
+			System.out.println("You do not have any more spares.");
+			this.stranded = true;
+			}
+		}
+
+	}
 	public void drive(double minDistance)
 	{
 		Scanner keyboard = new Scanner(System.in);
@@ -102,6 +120,7 @@ public class Vehicle
 		setFuel(fuel - engine.fuelRequired(minDistance, this.totalWeight(), this.getSpeed()));
 		milesToDestination -= minDistance;
 		forwardProgress += minDistance;
+		this.checkTires();
 	}
 	
 	public double totalWeight()

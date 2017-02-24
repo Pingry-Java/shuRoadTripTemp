@@ -20,9 +20,37 @@ public class RoadTrip
 		
 		userVehicle = keyboard.nextLine();
 
+		while ( !userVehicle.equals("Motorcycle") & !userVehicle.equals("Truck") & !userVehicle.equals("Bus") & !userVehicle.equals("Car") ) {
+
+			System.out.println("Not a valid vehicle. Please try again: ");
+			userVehicle = keyboard.nextLine();
+
+		}
+		
+		
+
+
 		System.out.println("Please enter the number of people. (At least 1)");
 		int numPeople = keyboard.nextInt();
 		keyboard.nextLine();
+
+		Vehicle user;
+
+
+		if (userVehicle.equals("Motorcycle")) {
+			user = new Motorcycle(numPeople);
+			System.out.println("You have picked Motorcycle"); }
+		else if (userVehicle.equals("Truck")) {
+			user = new Truck(numPeople);
+			System.out.println("You have picked Truck."); } 
+		else if (userVehicle.equals("Bus"))
+		{
+			user = new Bus(numPeople);
+			System.out.println("You have picked Bus.");
+		}
+		else {
+			user = new Car(numPeople); 
+			System.out.println("You have picked Car."); }
 
 		while ((userVehicle.equals("Motorcycle") & numPeople > 2) || (userVehicle.equals("Car") & numPeople > 6) || (userVehicle.equals("Truck") & numPeople > 6) || (userVehicle.equals("Bus") & numPeople > 30) )  {
 
@@ -30,25 +58,6 @@ public class RoadTrip
 			numPeople = keyboard.nextInt();
 			keyboard.nextLine();
 
-		}
-
-
-		Vehicle user;
-		if (userVehicle.equals("Motorcycle"))
-			user = new Motorcycle(numPeople);
-		else if (userVehicle.equals("Truck"))
-			user = new Truck(numPeople);
-		else if (userVehicle.equals("Bus"))
-		{
-			user = new Bus(numPeople);
-			System.out.println("You have picked Bus.");
-		}
-		else if(userVehicle.equals("Car"))
-			user = new Car(numPeople);
-		else
-		{
-			user = new Car(numPeople);
-			System.out.println("That option was not detected. You have been given a car.");
 		}
 
 

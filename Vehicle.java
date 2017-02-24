@@ -161,12 +161,17 @@ public class Vehicle
 			return true;
 		if (tires<origTires)
 			return true;
-		for (Passenger p:passArr) {
-			if (p.getIsDead())
-				return true; //assuming you can't kill your passengers...
-		}
+		
+		int count = 0;
+		for (Passenger p: passArr) {
+			if (p.getIsDead()) {
+				count += 1; //assuming you can't kill your passengers...
+		} }
+		if (count == passArr.length)
+			return true; 
+
 		return false;
-	}
+	 }
 
 	public boolean isStranded(boolean tf)//for passengers starving.
 	{

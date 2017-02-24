@@ -165,6 +165,7 @@ public class RoadTrip
 		//Needs Fixing. 
 		double deliveryPayment = Math.round(Math.random() * (350 - 100 + 1) + 250);	
 		System.out.println("Welcome to the Gas Station!");
+		System.out.println("You are at gas station number " + user.getForwardProgress()/200);
 		String input2;
 		while (stay)
 		{

@@ -20,7 +20,7 @@ public class RoadTrip
 		
 		userVehicle = keyboard.nextLine();
 
-		System.out.println("Please enter the number of people.");
+		System.out.println("Please enter the number of people. (At least 1)");
 		int numPeople = keyboard.nextInt();
 		keyboard.nextLine();
 
@@ -117,39 +117,62 @@ public class RoadTrip
 	
 		double distance;
 		double speed;
+		double score;
+		double travelTime = 0;
+		int alive = 0;
 		while (!user.isStranded())
 		{
 			gasStop(user, user.passArr, foods);
 			System.out.println("Is there a set distance you'd like to drive? y/n");
 			input = keyboard.nextLine();
-			while (input.equals("y"))
+			if (input.equals("y"))
 			{
-				System.out.println("How far would you like to drive?");
-				distance = keyboard.nextDouble();
-				keyboard.nextLine();
+				while(input.equals("y"))
+				{
+					System.out.println("How far would you like to drive?");
+					distance = keyboard.nextDouble();
+					keyboard.nextLine();
+					System.out.println("How fast would you like to drive?");
+					speed =  keyboard.nextDouble();
+					keyboard.nextLine();
+					user.setSpeed(speed);
+					user.drive(distance);
+					removeFood(user.passArr, distance);
+					travelTime = travelTime + (distance/speed);
+					for (int i = 0; i < user.passArr.length; i++)
+					{
+						user.passArr[i].check();
+						if (user.passArr[i].getIsDead() == false)
+							alive++;
+					}
+					score = ((1/travelTime) * (alive + 1)) - (user.balance() * 0.1);
+					user.ifStranded();
+					user.ifWin(score);
+					System.out.println("'y' to drive a specific distance again. 'n' to drive to the next stop. You MUST end on a stop.");
+					input = keyboard.nextLine();
+				}
+			}
+			else
+			{
 				System.out.println("How fast would you like to drive?");
 				speed =  keyboard.nextDouble();
 				keyboard.nextLine();
 				user.setSpeed(speed);
-				user.drive(distance);
-				removeFood(user.passArr, distance);
-				
-				user.ifStranded();
-				user.ifWin();
-				System.out.println("'y' to drive a specific distance again. 'n' to drive to the next stop.");
-				input = keyboard.nextLine();
+				user.drive();
+				removeFood(user.passArr, user.distanceToNextStop());
+				travelTime = travelTime + (user.distanceToNextStop()/speed);
 			}
-			System.out.println("How fast would you like to drive?");
-			speed =  keyboard.nextDouble();
-			keyboard.nextLine();
-			user.setSpeed(speed);
-			user.drive();
 			
-			removeFood(user.passArr, 200);
+			for (int i = 0; i < user.passArr.length; i++)
+			{
+				user.passArr[i].check();
+				if (user.passArr[i].getIsDead() == false)
+					alive++;
+			}
+			score = ((1/travelTime) * (alive + 1)) - (user.balance() * 0.1);
 			user.ifStranded();
-			user.passArr[0].check();
-			user.isStranded(user.passArr[0].getIsDead());
-			user.ifWin();
+			
+			user.ifWin(score);
 		}
 		
 		
@@ -291,25 +314,38 @@ public class RoadTrip
 		else if (food == 2)
 		{
 			user.pay(20*quantity);
+			for (int i = 0; i < ps.length; i++)
+				System.out.println(i+1 + ". " + ps[i].getName());
 			for(int z = 0; z < quantity; z++)
-				for(int i = 0; i < ps.length; i++)
-					ps[i].feed(foods.get(1));
+			{
+				System.out.println("Who would you like to feed? Refer to the list above (1 - " + ps.length + "). Remaining - " + (quantity-z));
+				toFeed = keyboard.nextInt();
+				ps[toFeed-1].feed(foods.get(1));
+			}
 		}
 		else if (food == 3)
 		{
 			user.pay(5*quantity);
+			for (int i = 0; i < ps.length; i++)
+				System.out.println(i+1 + ". " + ps[i].getName());
 			for(int z = 0; z < quantity; z++)
-				for(int i = 0; i < ps.length; i++)
-					ps[i].feed(foods.get(2));
-			
+			{
+				System.out.println("Who would you like to feed? Refer to the list above (1 - " + ps.length + "). Remaining - " + (quantity-z));
+				toFeed = keyboard.nextInt();
+				ps[toFeed-1].feed(foods.get(2));
+			}
 		}
 		else if (food == 4)
 		{
 			user.pay(20*quantity);
+			for (int i = 0; i < ps.length; i++)
+				System.out.println(i+1 + ". " + ps[i].getName());
 			for(int z = 0; z < quantity; z++)
-				for(int i = 0; i < ps.length; i++)
-					ps[i].feed(foods.get(3));
-			
+			{
+				System.out.println("Who would you like to feed? Refer to the list above (1 - " + ps.length + "). Remaining - " + (quantity-z));
+				toFeed = keyboard.nextInt();
+				ps[toFeed-1].feed(foods.get(3));
+			}
 		}
 	}
 	public static void deliverCargo(Vehicle user, double weight, double price, int stop)

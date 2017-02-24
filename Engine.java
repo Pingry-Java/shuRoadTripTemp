@@ -5,7 +5,7 @@ public class Engine
 	
 	public Engine()
 	{
-		this(6, 350);
+		this(16, 350);
 	}
 	
 	public Engine(int cyl, double weight)
@@ -25,6 +25,10 @@ public class Engine
 	}
 	public double fuelRequired(double distance, double weight, double speed)
 	{
+		if((speed*weight) > (cylinders * 800))
+		{
+			return -1;
+		}
 		return 6.67 * Math.pow(10, -10) * distance * weight * speed * speed * cylinders;
 	}
 }

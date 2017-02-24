@@ -1,3 +1,4 @@
+import java.util.Scanner;
 public class Vehicle
 {	
 	protected static double fuelCapacity = 16.0; 
@@ -75,6 +76,14 @@ public class Vehicle
 	
 	public void drive()
 	{
+		Scanner keyboard = new Scanner(System.in);
+		int user = 0;
+		while(engine.fuelRequired(this.distanceToNextStop(), this.totalWeight(), this.getSpeed()) == -1)
+		{
+			System.out.println("Woah! Your car won't be able to move at that speed! Try again!");
+			user = keyboard.nextInt();
+			speed = user;
+		}
 		fuel = fuel - engine.fuelRequired(this.distanceToNextStop(), this.totalWeight(), this.getSpeed());
 		milesToDestination -= this.distanceToNextStop();
 		forwardProgress += this.distanceToNextStop();
@@ -82,6 +91,14 @@ public class Vehicle
 	
 	public void drive(double minDistance)
 	{
+		Scanner keyboard = new Scanner(System.in);
+		int user = 0;
+		while(engine.fuelRequired(this.distanceToNextStop(), this.totalWeight(), this.getSpeed()) == -1)
+		{
+			System.out.println("Woah! Your car won't be able to move at that speed! Try again!");
+			user = keyboard.nextInt();
+			speed = user;
+		}
 		setFuel(fuel - engine.fuelRequired(minDistance, this.totalWeight(), this.getSpeed()));
 		milesToDestination -= minDistance;
 		forwardProgress += minDistance;
@@ -177,7 +194,7 @@ public class Vehicle
 	{
 		if (tf)
 		{
-			System.out.println("I starved to death");
+			System.out.println("I starved to death!");
 		}
 		return tf;
 	}
@@ -187,11 +204,11 @@ public class Vehicle
 	{
 		return passArr;
 	}
-	public void ifWin()
+	public void ifWin(double score)
 	{
 		if (this.forwardProgress >= this.milesToDestination)
 		{
-			System.out.println("You made it!!! \n Congratulations!!!");
+			System.out.println("You made it!!! \n Congratulations!!! Your score was " + score);
 			System.exit(0);
 		}
 		
@@ -204,5 +221,6 @@ public class Vehicle
 			System.exit(0);
 		}
 	}
+	
 
 }

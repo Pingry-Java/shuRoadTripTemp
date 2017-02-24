@@ -58,12 +58,12 @@ public class Vehicle
 	
 	public double distanceToNextStop()
 	{
-		if (((forwardProgress/200) - (int)(forwardProgress/200)) * 200 == 0)
-			return 200;
-		else
-			return ((forwardProgress/200) - (int)(forwardProgress/200)) * 200;
+		return 200 - forwardProgress%200;
 	}
-	
+		public void setPass(Passenger[] arr)
+	{
+		passArr = arr;
+	}
 	public double getSpeed()
 	{
 		return speed;
@@ -76,7 +76,7 @@ public class Vehicle
 	
 	public void drive()
 	{
-		setFuel(fuel - engine.fuelRequired(this.distanceToNextStop(), this.totalWeight(), this.getSpeed()));
+		fuel = fuel - engine.fuelRequired(this.distanceToNextStop(), this.totalWeight(), this.getSpeed());
 		milesToDestination -= this.distanceToNextStop();
 		forwardProgress += this.distanceToNextStop();
 	}
@@ -168,10 +168,12 @@ public class Vehicle
 		}
 		return false;
 	}
+
 	public boolean isStranded(boolean tf)//for passengers starving.
 	{
 		return tf;
 	}
+
 	
 	public Passenger[] getPassengers()
 	{

@@ -72,7 +72,7 @@ public class RoadTrip
 				user.passArr[i] = new Passenger(keyboard.nextLine());
 			}
 		}
-		if (nameYN.equals("n"))
+		else
 		{
 			for (int i = 0; i < numPeople; i++)
 				user.passArr[i] = new Passenger();
@@ -103,7 +103,7 @@ public class RoadTrip
 		}
 		System.out.println("\n"+"\n");
 		System.out.println("To refuel your vehicle, there will be gas stations. At gas stations, you will be able to recieve assignments to deliver cargo. You can decline the offers. If you accept and succeed, you will be paid. You can also buy food to feed your passengers.");
-		System.out.println("However, the heavier the vehicle and its cargo is, the more fuel it will use. Also, the faster you travel, the more fuel you will use. Right now, it would take " + user.getEngine().fuelRequired(user.distanceToNextStop(), user.totalWeight(), 10) + " gallons if you were to travel to the next gas station (200 miles) at 10 mph.");
+		System.out.println("However, the heavier the vehicle and its cargo is, the more fuel it will use. Also, the faster you travel, the more fuel you will use. Right now, it would take " + user.getEngine().fuelRequired(user.distanceToNextStop(), user.totalWeight(), 50) + " gallons if you were to travel to the next gas station (200 miles) at 50 mph.");
 		//System.out.println("You can access this information at any time by typing help in the command line.");
 		//Todo - make above possible
 		System.out.println("Your journey starts now! Sucessfully get to your destination! Good Luck! ");
@@ -148,7 +148,7 @@ public class RoadTrip
 					keyboard.nextLine();
 					user.setSpeed(speed);
 					user.drive(distance);
-					removeFood(user.passArr, distance);
+					removeFood(user.passArr, distance,speed);
 					travelTime = travelTime + (distance/speed);
 					for (int i = 0; i < user.passArr.length; i++)
 					{
@@ -163,16 +163,16 @@ public class RoadTrip
 					input = keyboard.nextLine();
 				}
 			}
-			else
-			{
-				System.out.println("How fast would you like to drive?");
-				speed =  keyboard.nextDouble();
-				keyboard.nextLine();
-				user.setSpeed(speed);
-				user.drive();
-				removeFood(user.passArr, user.distanceToNextStop());
-				travelTime = travelTime + (user.distanceToNextStop()/speed);
-			}
+			
+		
+			System.out.println("How fast would you like to drive?");
+			speed =  keyboard.nextDouble();
+			keyboard.nextLine();
+			user.setSpeed(speed);
+			user.drive();
+			removeFood(user.passArr, user.distanceToNextStop(),speed);
+			travelTime = travelTime + (user.distanceToNextStop()/speed);
+			
 			
 			for (int i = 0; i < user.passArr.length; i++)
 			{
@@ -236,7 +236,7 @@ public class RoadTrip
 				else if(input == 2)
 				{
 					System.out.println("Gas Tank - " + user.getFuel() + "/" + user.getFuelCapacity());
-					System.out.println("To travel to the next gas station (200 miles) travelling at 10 mph, you will need " + user.getEngine().fuelRequired(user.distanceToNextStop(), user.totalWeight(), 10));
+					System.out.println("To travel to the next gas station (200 miles) travelling at 50 mph, you will need " + user.getEngine().fuelRequired(user.distanceToNextStop(), user.totalWeight(), 50));
 				}
 				else if(input == 3)
 				{
@@ -370,11 +370,11 @@ public class RoadTrip
 		}
 
 	}
-	public static void removeFood(Passenger[] ps, double distance)
+	public static void removeFood(Passenger[] ps, double distance, double speed)
 	{
 		for (int i = 0; i < ps.length; i++)
 		{
-			ps[i].eat(distance);
+			ps[i].eat(distance,speed);
 		}
 	}
 	

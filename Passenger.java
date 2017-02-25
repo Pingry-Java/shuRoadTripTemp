@@ -33,9 +33,10 @@ public class Passenger
 		return foodBar;
 	}
 	
-	public void eat(double remove)
+	public void eat(double distance, double speed)
 	{
-		foodBar = foodBar - remove;
+		double time = distance/speed;
+		foodBar = foodBar - (time*20);
 	}
 	public void check()
 	{

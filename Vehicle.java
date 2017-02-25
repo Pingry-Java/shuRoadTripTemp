@@ -88,13 +88,13 @@ public class Vehicle
 		milesToDestination -= this.distanceToNextStop();
 		forwardProgress += this.distanceToNextStop();
 
-		this.checkTires();
+		this.checkTires(this.distanceToNextStop());
 
 		
 	}
-	public void checkTires() {
+	public void checkTires(double distance) {
 
-		if(Math.random() < 0.25) { //25 chance of flat
+		if(Math.random() < 0.0015 * distance) { //30% chance of flat for 200 mi
 		System.out.println("A tire popped.");
 		if (this.spares > 0) {
 			spares --;
@@ -120,7 +120,7 @@ public class Vehicle
 		setFuel(fuel - engine.fuelRequired(minDistance, this.totalWeight(), this.getSpeed()));
 		milesToDestination -= minDistance;
 		forwardProgress += minDistance;
-		this.checkTires();
+		this.checkTires(minDistance);
 	}
 	
 	public double totalWeight()
@@ -161,10 +161,12 @@ public class Vehicle
 	{
 		return engine;
 	}
+	
 	public void setTires(int tires)
 	{
 		this.tires = tires;
 	}
+	
 	public void pay(double money)
 	{
 		this.money = this.money - money;
@@ -185,38 +187,34 @@ public class Vehicle
 	{
 		return forwardProgress;
 	}
+	
+	
 	public void addTires(int tires)
 	{
-		this.tires = this.tires + tires;
+		this.spares = spares + tires;
 	}
+	
+	
 	public boolean isStranded()
 	{
 		if (this.stranded)
 			return true;
 		if (this.fuel <= 0)
+		{
+			System.out.println("You ran out of gas...");
 			return true;
-		if (tires<origTires)
+		}
+		if (money <= 0)
+		{
+			System.out.println("You ran out of money...");
 			return true;
-		if (money < 0)
-			return true;
-
+		}
+		
 		return false;
 	 }
 
-	public boolean isStranded(boolean tf)//for passengers starving.
-	{
-		if (tf)
-		{
-			System.out.println("I starved to death!");
-		}
-		return tf;
-	}
-
 	
-	public Passenger[] getPassengers()
-	{
-		return passArr;
-	}
+
 	public void ifWin(double score)
 	{
 		if (this.forwardProgress >= this.milesToDestination)

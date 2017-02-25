@@ -8,6 +8,6 @@ public class Truck extends Vehicle
 	public Truck(int passengers)
 	{
 		 
-		super(new Engine(550, 250), 120, passengers, 6, 2000, 18, 2, 32000);
+		super(new Engine(8, 250), 120, passengers, 6, 2000, 18, 2, 32000);
 	}
 }

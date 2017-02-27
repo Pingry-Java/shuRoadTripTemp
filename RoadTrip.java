@@ -37,31 +37,55 @@ public class RoadTrip
 		Vehicle user;
 
 
-		if (userVehicle.equals("Motorcycle")) {
-			user = new Motorcycle(numPeople);
-			System.out.println("You have picked Motorcycle"); }
-		else if (userVehicle.equals("Truck")) {
-			user = new Truck(numPeople);
-			System.out.println("You have picked Truck."); } 
-		else if (userVehicle.equals("Bus"))
+		if (userVehicle.equals("Motorcycle")) 
 		{
-			user = new Bus(numPeople);
-			System.out.println("You have picked Bus.");
+			System.out.println("You have picked Motorcycle"); 
+			while (numPeople > 2 )  
+			{
+				System.out.println("Sorry that is not a valid amount of people for that vehicle. Please see: (Car: Max 6, Bus: Max 30, Motocycle: Max 2, Truck: Max 6). Enter new number: ");
+				numPeople = keyboard.nextInt();
+				keyboard.nextLine();
+			}	
+			user = new Motorcycle(numPeople);
 		}
-		else {
-			user = new Car(numPeople); 
-			System.out.println("You have picked Car."); }
-
-		while ((userVehicle.equals("Motorcycle") & numPeople > 2) || (userVehicle.equals("Car") & numPeople > 6) || (userVehicle.equals("Truck") & numPeople > 6) || (userVehicle.equals("Bus") & numPeople > 30) )  {
-
+		else if (userVehicle.equals("Truck")) 
+		{
+			System.out.println("You have picked Truck."); 
+			while (numPeople > 6 )  
+			{
 			System.out.println("Sorry that is not a valid amount of people for that vehicle. Please see: (Car: Max 6, Bus: Max 30, Motocycle: Max 2, Truck: Max 6). Enter new number: ");
 			numPeople = keyboard.nextInt();
 			keyboard.nextLine();
-
+			}
+			user = new Truck(numPeople);
+		}	
+		else if (userVehicle.equals("Bus"))
+		{
+			System.out.println("You have picked Bus.");
+			while (numPeople > 30)
+			{
+				System.out.println("Sorry that is not a valid amount of people for that vehicle. Please see: (Car: Max 6, Bus: Max 30, Motocycle: Max 2, Truck: Max 6). Enter new number: ");
+				numPeople = keyboard.nextInt();
+				keyboard.nextLine();
+			}
+			user = new Bus(numPeople);
+		
+		}
+		else {
+			System.out.println("You have picked Car."); 
+			while (numPeople > 6)
+			{
+				System.out.println("Sorry that is not a valid amount of people for that vehicle. Please see: (Car: Max 6, Bus: Max 30, Motocycle: Max 2, Truck: Max 6). Enter new number: ");
+				numPeople = keyboard.nextInt();
+				keyboard.nextLine();
+			}
+			user = new Car(numPeople); 
+		
 		}
 
 
 
+		System.out.println(numPeople);
 		System.out.println("Would you like to name your passengers? y/n");
 		String nameYN = keyboard.nextLine();
 		if (nameYN.equals("y"))
